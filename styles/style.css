@@ -1,3 +1,45 @@
-canvas {
-    background-color: red;
+body {
+    padding: 0;
+    text-align: center;
 }
+
+.game-intro {
+    float: left;
+    padding: 0% 10%;
+}
+
+.game-intro p {
+    font-size: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.logo-img {
+    margin-top: 20px;
+
+    width: 475px;
+}
+
+.arrows-img {
+    width: 150px;
+}
+
+body button {
+    font-size: 30px;
+    background-color: red;
+    color: white;
+    padding: 20px 40px;
+    border: 0;
+    box-shadow: 0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#game-board {
+    float: left;
+    padding: 20px 0px;
+}
+
+/* canvas {
+
+    background-color: blue;
+} */
