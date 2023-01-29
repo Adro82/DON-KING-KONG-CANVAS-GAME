@@ -12,7 +12,8 @@ const appBarrels = {
     platform: [],
     stairs: [],
     barrel: [],
-    marioPos: {x: undefined, y: undefined},
+    timer: 1,
+    marioPos: { x: undefined, y: undefined },
     keys: {
         LEFT: 'ArrowLeft',
         RIGHT: 'ArrowRight',
@@ -23,7 +24,7 @@ const appBarrels = {
     init() {
         this.setContext()
         this.setDimensions()
-        this.setEventListeners()
+        // this.setEventListeners()
         // this.createMario()
         // this.createPlatform()
         this.start()
@@ -40,28 +41,28 @@ const appBarrels = {
         this.canvasTag.setAttribute('height', this.canvasSize.h)
     },
 
-    setEventListeners() {
-        document.onkeydown = evt => {
-            if (evt.key === this.keys.RIGHT) this.marioRight = true
-            if (evt.key === this.keys.LEFT) this.marioLeft = true
-            if (evt.key === this.keys.UP) this.marioUp = true
-            if (evt.key === this.keys.DOWN) this.marioDown = true
+    // setEventListeners() {
+    //     document.onkeydown = evt => {
+    //         if (evt.key === this.keys.RIGHT) this.marioRight = true
+    //         if (evt.key === this.keys.LEFT) this.marioLeft = true
+    //         if (evt.key === this.keys.UP) this.marioUp = true
+    //         if (evt.key === this.keys.DOWN) this.marioDown = true
 
-            // if (evt.key === this.keys.RIGHT) this.marioRight += 10
-            // if (evt.key === this.keys.LEFT) this.marioLeft -= 10
-            // if (evt.key === this.keys.UP) this.marioUp += 10
-            // if (evt.key === this.keys.DOWN) this.marioDown -= 10
-            // console.log('arrow')
-        }
+    //         // if (evt.key === this.keys.RIGHT) this.marioRight += 10
+    //         // if (evt.key === this.keys.LEFT) this.marioLeft -= 10
+    //         // if (evt.key === this.keys.UP) this.marioUp += 10
+    //         // if (evt.key === this.keys.DOWN) this.marioDown -= 10
+    //         // console.log('arrow')
+    //     }
 
-        document.onkeyup = evt => {
-            if (evt.key === this.keys.RIGHT) this.marioRight = false
-            if (evt.key === this.keys.LEFT) this.marioLeft = false
-            if (evt.key === this.keys.UP) this.marioUp = false
-            if (evt.key === this.keys.DOWN) this.marioDown = false
-            console.log(this.setEventListeners)
-        }
-    },
+    //     document.onkeyup = evt => {
+    //         if (evt.key === this.keys.RIGHT) this.marioRight = false
+    //         if (evt.key === this.keys.LEFT) this.marioLeft = false
+    //         if (evt.key === this.keys.UP) this.marioUp = false
+    //         if (evt.key === this.keys.DOWN) this.marioDown = false
+    //         console.log(this.setEventListeners)
+    //     }
+    // },
 
 
     // createMario(){
@@ -87,6 +88,10 @@ const appBarrels = {
         this.mario = new mario(this.ctx, this.canvasSize, 15, 80, 10, 570, this.marioRight, this.marioLeft, this.marioUp, this.marioDown)
         console.log('plataforma')
 
+        this.barrel.push(
+            new barrel(this.ctx, this.canvasSize),
+        )
+        console.log(barrel)
         // this.barrel.push(new this.barrel(this.ctx. this.canvasSize,100,100,100,100))
 
         // // this.mario.push(
@@ -107,8 +112,10 @@ const appBarrels = {
         this.platform.forEach(platform => platform.draw())
         this.stairs.forEach(stairs => stairs.draw())
         this.mario.draw()
-        this.mario.move()
-        // this.stairs.forEach(barrel => barrel.draw())
+        this.barrel.forEach(barrel => barrel.draw())
+        this.barrel.forEach(barrel => barrel.move())
+        // this.mario.move()
+
     },
 
     // createPlatform() {

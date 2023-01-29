@@ -59,8 +59,12 @@ class mario {
             x: marioX,
             y: marioY
         }
+
+        this.marioSpeed = 10
+
         // { x: 100, y: 100 }
         this.init()
+        this.setEventListeners()
 
     }
 
@@ -74,16 +78,51 @@ class mario {
         this.imageInstance = new Image()
         this.imageInstance.src = './images/car.png'
         this.ctx.drawImage(this.imageInstance, this.marioPos.x, this.marioPos.y, this.marioSize.w, this.marioSize.h)
-        // this.move()
         // this.ctx.fillStyle = 'pink'
         // this.ctx.fillRect(this.marioPos.x, this.marioPos.y, this.marioSize.w, this.marioSize.h)
     }
-    move(){
-    if (this.marioLeft && (this.marioPos.x + this.marioSize.w) > this.canvasSize.w) this.marioPos.x -= 5
-    //if (this.marioLeft && this.marioPos.x > 0) this.marioPos.x -= 5
-    if (this.marioRight && (this.marioPos.x + this.marioSize.w) < this.canvasSize.w) this.marioPos.x += 5
-    //if (this.marioUp && this.marioPos.y > 600) this.marioPos.y -= 5
-    if (this.marioUp && (this.marioPos.y + this.marioSize.h) < this.canvasSize.h) this.marioPos.y -= 5
-    if (this.marioDown && (this.marioPos.y + this.marioSize.h) < this.canvasSize.h) this.marioPos.y += 5
+
+    move (){
+        if (this.marioPos.x < this.canvasSize) { 
+            this.marioPos.x += this.marioSpeed
+        }
+        if (this.marioPos.y < this.canvasSize) {
+            this.marioPos.y += this.marioSpeed
+        }
+
+    }
+    setEventListeners() {
+
+        // document.onkeydown = evt => {
+        //     if (evt.key === 'ArrowRigth') this.marioRight = true
+        //     if (evt.key === 'ArrowLeft') this.marioLeft = true
+        //     if (evt.key === 'ArrowUp') this.marioUp = true
+        //     if (evt.key === 'ArrowDown') this.marioDown = true
+        // }
+
+        // document.onkeyup = evt => {
+        //     if (evt.key === 'ArrowRigth') this.marioRight = false
+        //     if (evt.key === 'ArrowLeft') this.marioLeft = false
+        //     if (evt.key === 'ArrowUp') this.marioUp = false
+        //     if (evt.key === 'ArrowDown') this.marioDown = false
+        //     console.log(this.setEventListeners)
+        // }
+
+        document.onkeydown = evt => {
+            if (evt.key === 'ArrowLeft' && this.marioPos.x > 0) this.marioPos.x -= 10
+            if (evt.key === 'ArrowRight' && this.marioPos.x < 850) this.marioPos.x += 10
+            if (evt.key === 'ArrowUp' && this.marioPos.y > 0) this.marioPos.y -= 10
+            if (evt.key === 'ArrowDown' && this.marioPos.y < 570) this.marioPos.y += 10
+        }
+        // document.onkeydown = evt =>{
+        //     if (evt.key === 'Arrowleft' && (this.marioPos.x + this.marioSize.w) > this.canvasSize.w) this.marioPos.x -= 5
+        //     //if (this.marioLeft && this.marioPos.x > 0) this.marioPos.x -= 5
+        //     if (evt.key === 'ArrowRigth' && (this.marioPos.x + this.marioSize.w) < this.canvasSize.w) this.marioPos.x += 5
+        //     //if (this.marioUp && this.marioPos.y > 600) this.marioPos.y -= 5
+        //     if (evt.key === 'ArrowUp' && (this.marioPos.y + this.marioSize.h) < this.canvasSize.h) this.marioPos.y -= 5
+        //     if (evt.key === 'ArrowDown' && (this.marioPos.y + this.marioSize.h) < this.canvasSize.h) this.marioPos.y += 5
+        // }
+        //&& this.carPosition.x < 200 && this.carPosition.x > 100
     }
 }
+
