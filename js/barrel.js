@@ -5,13 +5,16 @@ class barrel {
         this.ctx = ctx
         this.canvasSize = canvasSize
 
-        this.barrelSize = {w: 50,h: 50}
+        this.barrelSize = { w: 30, h: 30 }
         // { w: 500, h: 50 }
-        this.barrelPosition = {x: 0,y: 0}
+        this.barrelPosition = {
+            x: Math.random() * (this.canvasSize.w - this.barrelSize.w * 2) + this.barrelSize.w,
+            y: 0 - this.barrelSize.h
+        }
         // { x: 100, y: 100 }
         //this.barrelVelocity = {x: 5, y:1}
         //this.barrelPhysics = { gravity: .1}
-        
+
         this.init()
 
     }
@@ -20,7 +23,7 @@ class barrel {
         this.draw()
         this.move()
         //this.generateBarrelRandom()
-       // this.positionRandom()
+        //this.positionRandom()
         //this.ctx.fillRect(400, 10, 20, 20)
     }
 
@@ -32,10 +35,13 @@ class barrel {
     move() {
         this.barrelPosition.y += 5
     }
-    // generateBarrelRandom(min, max) {
-    //     return Math.floor(Math.random() * (max - min +1)) + min
+
+    // generateBarrel() {
+    //     if(this.framesCounter % 70 === 0) {
+    //         this.barrel.push()
     //     }
-    //     positionRandom() {
-    //         this.position.x = this.generateBarrelRandom 
     // }
- }
+    // generateBarrelRandom(min, max) {
+    //     return Math.floor(Math.random() * (max - min)) + min
+    // }
+}

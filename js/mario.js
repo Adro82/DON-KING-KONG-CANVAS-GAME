@@ -83,13 +83,10 @@ class mario {
     }
 
     move (){
-        if (this.marioPos.x < this.canvasSize) { 
-            this.marioPos.x += this.marioSpeed
-        }
-        if (this.marioPos.y < this.canvasSize) {
-            this.marioPos.y += this.marioSpeed
-        }
-
+        this.marioPos.y += 10
+        this.marioPos.y -= 10
+        this.marioPos.x += 10
+        this.marioPos.x -= 10
     }
     setEventListeners() {
 
