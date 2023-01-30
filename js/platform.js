@@ -20,7 +20,6 @@ class platform {
 
     init() {
         this.draw()
-        //this.ctx.fillRect(400, 10, 20, 20)
     }
 
     draw() {

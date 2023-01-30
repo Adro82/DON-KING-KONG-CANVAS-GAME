@@ -42,11 +42,11 @@ class mario {
         this.marioVel.y += this.gravity
 
         if (this.marioPos.y > this.canvasSize.h - this.marioSize.h) {
-            this.marioVel.y *= -1
+            this.marioVel.y = 0
         }
 
         if (this.marioPos.x >= this.canvasSize.w - this.marioSize.w) {
-            this.marioVel.x *= -1
+            this.marioVel.x = 0
         }
     }
     setEventListeners() {

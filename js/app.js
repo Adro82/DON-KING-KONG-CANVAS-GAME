@@ -85,15 +85,12 @@ const appBarrels = {
                 new stairs(this.ctx, this.canvasSize, 20, 80, 350, 170),
                 new stairs(this.ctx, this.canvasSize, 20, 100, 550, 50),
             ),
-            this.mario = new mario(this.ctx, this.canvasSize, 15, 80, 10, 570, this.marioRight, this.marioLeft, this.marioUp, this.marioDown)
+            this.mario = new mario(this.ctx, this.canvasSize, 15, 80, 10, 620, this.marioRight, this.marioLeft, this.marioUp, this.marioDown)
         console.log('plataforma')
 
         this.barrel.push(new barrel(this.ctx, this.canvasSize),)
         this.barrel = []
-        // if (this.timer === 35) {
-        //     this.timer = 0
-        //     this.barrel.push(new barrel(this.ctx, this.canvasSize),)
-        // }
+
         console.log(barrel)
     },
     start() {
@@ -114,23 +111,16 @@ const appBarrels = {
         this.mario.init()
         this.barrel.forEach(barrel => barrel.draw())
         this.barrel.forEach(barrel => barrel.move())
-        //this.barrel.forEach(barrel => barrel.generateBarrelRandom())
-        // this.barrel.forEach(barrel => barrel.positionRandom())
     },
 
     drawBackground() {
-        this.ctx.fillStyle = 'lightgreen'
+        this.ctx.fillStyle = 'darkgrey'
         this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-        // this.ctx.fillStyle = 'brown'
-        // this.ctx.fillRect(0, 650, this.canvasSize.w, this.canvasSize.h)
-
-
     },
 
 
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-        // this.ctx.clearRect(0, 650, this.canvasSize.w, this.canvasSize.h)
     },
 
     generateBarrel() {
