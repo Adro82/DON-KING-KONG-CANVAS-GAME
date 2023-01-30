@@ -13,6 +13,7 @@ const appBarrels = {
     stairs: [],
     barrels: [],
     timer: 1,
+    interval: undefined,
 
     init() {
         this.setContext()
@@ -51,21 +52,23 @@ const appBarrels = {
             this.mario = new Mario(this.ctx, this.canvasSize, 15, 80, 10, 620, this.marioRight, this.marioLeft, this.marioUp, this.marioDown)
         console.log('plataforma')
 
-        this.barrels.push(new Barrel(this.ctx, this.canvasSize),)
+        this.barrels.push(new Barrel(this.ctx, this.canvasSize))
         this.barrels = []
 
         console.log(Barrel)
     },
     start() {
         this.reset()
-        setInterval(() => {
+        this.interval = setInterval(() => {
             this.framesCounter > 300 ? this.framesCounter = 0 : this.framesCounter++
             this.clearAll()
             this.drawAll()
             this.generateBarrel()
             this.clearBarrel()
-
-            this.isColission() ? this.gameOver() : null
+            this.isColission()
+            // this.barrels.forEach(elm => console.log('soy la posicion del barrel', elm.barrelPos.y))
+            // console.log('soy la posición del madrio', this.mario.marioPos.x)
+            //if (this.isColission) this.gameOver()
 
         }, 100)
     },
@@ -92,7 +95,7 @@ const appBarrels = {
 
     generateBarrel() {
         if (this.framesCounter % 70 === 0) {
-            this.barrels.push(new Barrel(this.ctx, this.canvasSize),)
+            this.barrels.push(new Barrel(this.ctx, this.canvasSize))
         }
     },
 
@@ -102,19 +105,21 @@ const appBarrels = {
 
     isColission() {
 
-        return this.barrels.some(barrel => {
-            return (
+        this.barrels.forEach(barrel => {
+            if (
                 this.mario.marioPos.x < barrel.barrelPos.x + barrel.barrelSize.w &&
                 this.mario.marioPos.x + this.mario.marioSize.w > barrel.barrelPos.x &&
                 this.mario.marioPos.y < barrel.barrelPos.y + barrel.barrelSize.h &&
                 this.mario.marioSize.h + this.mario.marioPos.y > barrel.barrelPos.y
-            )
+            ) {
+                this.gameOver()
+            }
         })
 
     },
 
     gameOver() {
-
+        console.log('entro aquii?')
         clearInterval(this.interval)
 
     },
