@@ -24,7 +24,7 @@ class stairs {
     }
 
     draw() {
-        this.ctx.fillStyle = 'blue'
+        this.ctx.fillStyle = 'pink'
         this.ctx.fillRect(this.stairsPos.x, this.stairsPos.y, this.stairsSize.w, this.stairsSize.h)
     }
 

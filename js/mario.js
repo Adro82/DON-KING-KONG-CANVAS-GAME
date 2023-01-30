@@ -1,68 +1,21 @@
 class mario {
-
-    // constructor(ctx, canvasSize, marioSize, marioPos, marioRight, marioLeft, marioUp, marioDown) {
-    //     this.ctx = ctx
-    //     this.canvasSize = canvasSize
-    //     {w: undefined, y:undefined}
-    //     this.marioSize = marioSize
-    //     // {w:100, h:100}
-    //     // this.marioSpeed = marioSpeed
-    //     this.marioRight = marioRight
-    //     this.marioLeft = marioLeft
-    //     this.marioUp = marioUp
-    //     this.marioDown = marioDown
-    //     this.marioPos = marioPos
-    //     // {x: 0, y: 600}
-
-    //     this.init()
-
-    //     }
-
-    //     init(){
-    //         this.draw()
-    //         this.move()
-    //     }
-
-    //     move(){
-    //         if (this.marioLeft && this.marioPos.x > 0) {
-    //             this.marioPos.x - 5
-    //         }
-    //         if (this.marioRight && (this.marioPos.x + this.marioSize.w) < this.canvasSize.w) {
-    //             this.marioPos.x += 5
-    //         }
-
-    //         // this.marioPos.x += this.marioSpeed
-    //         // this.marioPos.y += this.marioSpeed
-    //     }
-
-    //     draw() {
-    //         this.imageInstance = new Image()
-    //         this.imageInstance.src = './images.car.png'
-    //         // this.move()
-    //         this.ctx.drawImage(this.imageInstance, this.marioPos.x, this.marioPos.y, this.marioSize.w, this.marioSize.h)
-    //     }
-
     constructor(ctx, canvasSize, marioWidth, marioHeight, marioX, marioY, marioRight, marioLeft, marioUp, marioDown) {
         this.ctx = ctx
         this.canvasSize = canvasSize
-        this.marioRight = marioRight
-        this.marioLeft = marioLeft
-        this.marioUp = marioUp
-        this.marioDown = marioDown
-
+        // this.marioRight = marioRight
+        // this.marioLeft = marioLeft
+        // this.marioUp = marioUp
+        // this.marioDown = marioDown
         this.marioSize = {
             w: marioWidth,
             h: marioHeight
         }
-        // { w: 500, h: 50 }
         this.marioPos = {
             x: marioX,
             y: marioY
         }
-
-        this.marioSpeed = 10
-
-        // { x: 100, y: 100 }
+        this.marioVel = { x: 0, y: 0 }
+        this.gravity = 0.1;
         this.init()
         this.setEventListeners()
 
@@ -71,7 +24,7 @@ class mario {
     init() {
         this.draw()
         this.move()
-        //this.ctx.fillRect(400, 10, 20, 20)
+        // this.checkHitBox()
     }
 
     draw() {
@@ -82,11 +35,19 @@ class mario {
         // this.ctx.fillRect(this.marioPos.x, this.marioPos.y, this.marioSize.w, this.marioSize.h)
     }
 
-    move (){
-        this.marioPos.y += 10
-        this.marioPos.y -= 10
-        this.marioPos.x += 10
-        this.marioPos.x -= 10
+    move() {
+        this.marioPos.x += this.marioVel.x
+        this.marioPos.y += this.marioVel.y
+
+        this.marioVel.y += this.gravity
+
+        if (this.marioPos.y > this.canvasSize.h - this.marioSize.h) {
+            this.marioVel.y *= -1
+        }
+
+        if (this.marioPos.x >= this.canvasSize.w - this.marioSize.w) {
+            this.marioVel.x *= -1
+        }
     }
     setEventListeners() {
 
@@ -111,15 +72,24 @@ class mario {
             if (evt.key === 'ArrowUp' && this.marioPos.y > 0) this.marioPos.y -= 10
             if (evt.key === 'ArrowDown' && this.marioPos.y < 570) this.marioPos.y += 10
         }
-        // document.onkeydown = evt =>{
-        //     if (evt.key === 'Arrowleft' && (this.marioPos.x + this.marioSize.w) > this.canvasSize.w) this.marioPos.x -= 5
-        //     //if (this.marioLeft && this.marioPos.x > 0) this.marioPos.x -= 5
-        //     if (evt.key === 'ArrowRigth' && (this.marioPos.x + this.marioSize.w) < this.canvasSize.w) this.marioPos.x += 5
-        //     //if (this.marioUp && this.marioPos.y > 600) this.marioPos.y -= 5
-        //     if (evt.key === 'ArrowUp' && (this.marioPos.y + this.marioSize.h) < this.canvasSize.h) this.marioPos.y -= 5
-        //     if (evt.key === 'ArrowDown' && (this.marioPos.y + this.marioSize.h) < this.canvasSize.h) this.marioPos.y += 5
-        // }
-        //&& this.carPosition.x < 200 && this.carPosition.x > 100
     }
+    // checkHitBox(element, level) {
+    //     console.log ('estoy en la funcion')
+    //     switch (element) {
+    //         case this.platform:
+    //             const platform = element[level].map((e) =>{
+    //                 if (
+    //                     this.position.x < e.platformPos.x + e.platformSize.w &&
+    //                     this.position.x + this.marioSize.w > e.platformPos.x &&
+    //                     this.position.y < e.platformPos.y + e.platformSize.h &&
+    //                     this.position.y + this.marioSize.h > e.platformPos.y
+    //                  ){
+    //                     this.position.y = e.platformPos.y - this.marioSize.h +1
+    //                     return true
+    //                  }
+    //                  else {return false}
+    //             }) 
+    //             return platform.some((e) => e === true);
+    //         }
+    // }
 }
-

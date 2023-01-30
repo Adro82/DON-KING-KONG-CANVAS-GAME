@@ -28,7 +28,7 @@ class barrel {
     }
 
     draw() {
-        this.ctx.fillStyle = 'pink'
+        this.ctx.fillStyle = 'lightyellow'
         this.ctx.fillRect(this.barrelPosition.x, this.barrelPosition.y, this.barrelSize.w, this.barrelSize.h)
     }
 

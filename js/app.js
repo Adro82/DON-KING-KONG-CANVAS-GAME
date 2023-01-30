@@ -87,7 +87,7 @@ const appBarrels = {
             ),
             this.mario = new mario(this.ctx, this.canvasSize, 15, 80, 10, 570, this.marioRight, this.marioLeft, this.marioUp, this.marioDown)
         console.log('plataforma')
-            
+
         this.barrel.push(new barrel(this.ctx, this.canvasSize),)
         this.barrel = []
         // if (this.timer === 35) {
@@ -103,7 +103,7 @@ const appBarrels = {
             this.clearAll()
             this.drawAll()
             this.generateBarrel()
-            this.clearBarrel()
+            // this.clearBarrel()
         }, 100)
     },
 
@@ -111,8 +111,7 @@ const appBarrels = {
         this.drawBackground()
         this.platform.forEach(platform => platform.draw())
         this.stairs.forEach(stairs => stairs.draw())
-        this.mario.draw()
-        this.mario.move()
+        this.mario.init()
         this.barrel.forEach(barrel => barrel.draw())
         this.barrel.forEach(barrel => barrel.move())
         //this.barrel.forEach(barrel => barrel.generateBarrelRandom())
