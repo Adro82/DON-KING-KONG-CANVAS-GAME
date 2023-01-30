@@ -1,11 +1,7 @@
-class mario {
+class Mario {
     constructor(ctx, canvasSize, marioWidth, marioHeight, marioX, marioY, marioRight, marioLeft, marioUp, marioDown) {
         this.ctx = ctx
         this.canvasSize = canvasSize
-        // this.marioRight = marioRight
-        // this.marioLeft = marioLeft
-        // this.marioUp = marioUp
-        // this.marioDown = marioDown
         this.marioSize = {
             w: marioWidth,
             h: marioHeight
@@ -24,15 +20,12 @@ class mario {
     init() {
         this.draw()
         this.move()
-        // this.checkHitBox()
     }
 
     draw() {
         this.imageInstance = new Image()
         this.imageInstance.src = './images/car.png'
         this.ctx.drawImage(this.imageInstance, this.marioPos.x, this.marioPos.y, this.marioSize.w, this.marioSize.h)
-        // this.ctx.fillStyle = 'pink'
-        // this.ctx.fillRect(this.marioPos.x, this.marioPos.y, this.marioSize.w, this.marioSize.h)
     }
 
     move() {
@@ -73,23 +66,5 @@ class mario {
             if (evt.key === 'ArrowDown' && this.marioPos.y < 570) this.marioPos.y += 10
         }
     }
-    // checkHitBox(element, level) {
-    //     console.log ('estoy en la funcion')
-    //     switch (element) {
-    //         case this.platform:
-    //             const platform = element[level].map((e) =>{
-    //                 if (
-    //                     this.position.x < e.platformPos.x + e.platformSize.w &&
-    //                     this.position.x + this.marioSize.w > e.platformPos.x &&
-    //                     this.position.y < e.platformPos.y + e.platformSize.h &&
-    //                     this.position.y + this.marioSize.h > e.platformPos.y
-    //                  ){
-    //                     this.position.y = e.platformPos.y - this.marioSize.h +1
-    //                     return true
-    //                  }
-    //                  else {return false}
-    //             }) 
-    //             return platform.some((e) => e === true);
-    //         }
-    // }
+    
 }

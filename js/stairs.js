@@ -1,26 +1,17 @@
-class stairs {
+class Stairs {
 
     constructor(ctx, canvasSize, stairsWidth, stairsHeight, stairsX, stairsY) {
         this.ctx = ctx
         this.canvasSize = canvasSize
 
-        this.stairsSize = {
-            w: stairsWidth,
-            h: stairsHeight
-        }
-        // { w: 500, h: 50 }
-        this.stairsPos = {
-            x: stairsX,
-            y: stairsY
-        }
-        // { x: 100, y: 100 }
+        this.stairsSize = {w: stairsWidth,h: stairsHeight}
+        this.stairsPos = {x: stairsX, y: stairsY}
         this.init()
 
     }
 
     init() {
         this.draw()
-        //this.ctx.fillRect(400, 10, 20, 20)
     }
 
     draw() {
