@@ -43,7 +43,7 @@ const appBarrels = {
             new Platform(this.ctx, this.canvasSize, 1000, 50, 0, 650),
         ),
             this.stairs.push(
-                new Stairs(this.ctx, this.canvasSize, 20, 130, 750, 520),
+                new Stairs(this.ctx, this.canvasSize, 40, 180, 750, 520),
                 new Stairs(this.ctx, this.canvasSize, 20, 80, 530, 420),
                 new Stairs(this.ctx, this.canvasSize, 20, 130, 230, 270),
                 new Stairs(this.ctx, this.canvasSize, 20, 80, 350, 170),
@@ -66,6 +66,8 @@ const appBarrels = {
             this.generateBarrel()
             this.clearBarrel()
             this.isColission()
+            this.isColissionWithStairs()
+            this.isColissionWithPlatforms()
             // this.barrels.forEach(elm => console.log('soy la posicion del barrel', elm.barrelPos.y))
             // console.log('soy la posición del madrio', this.mario.marioPos.x)
             //if (this.isColission) this.gameOver()
@@ -116,6 +118,30 @@ const appBarrels = {
             }
         })
 
+    },
+
+    isColissionWithStairs() {
+        const hasCollisioned = this.stairs.some(stair => {
+            return (
+                this.mario.marioPos.x <= stair.stairsPos.x + stair.stairsSize.w &&
+                this.mario.marioPos.x + this.mario.marioSize.w >= stair.stairsPos.x &&
+                this.mario.marioPos.y < stair.stairsPos.y + stair.stairsSize.h &&
+                this.mario.marioSize.h + this.mario.marioPos.y > stair.stairsPos.y
+            )
+        })
+        hasCollisioned ? this.mario.canMoveUpDown = true : this.mario.canMoveUpDown = false
+    },
+
+    isColissionWithPlatforms(){
+        const collisionedPlatform = this.platforms.some(platform => {
+            return (
+                this.mario.marioPos.x <= platform.platformPos.x + platform.platformSize.w &&
+                this.mario.marioPos.x + this.mario.marioSize.w >= platform.platformPos.x &&
+                this.mario.marioPos.y < platform.platformPos.y + platform.platformSize.h &&
+                this.mario.marioSize.h + this.mario.marioPos.y > platform.platformPos.y
+            )
+        })
+        collisionedPlatform = this.mario.marioPos.y = this.platform.platformPos.y - this.mario.marioSize.h + 1
     },
 
     gameOver() {

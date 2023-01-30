@@ -12,6 +12,7 @@ class Mario {
         }
         this.marioVel = { x: 0, y: 0 }
         this.gravity = 0.1;
+        this.canMoveUpDown = false
         this.init()
         this.setEventListeners()
 
@@ -42,7 +43,21 @@ class Mario {
             this.marioVel.x = 0
         }
     }
+    moveUp() {
+        if (this.canMoveUpDown) { this.marioPos.y -= 10; this.gravity = 0 }
+    }
+    moveDown() {
+        if (this.canMoveUpDown) { this.marioPos.y += 10; this.gravity = 0 }
+    }
+
     setEventListeners() {
+
+        document.onkeydown = evt => {
+            if (evt.key === 'ArrowLeft' && this.marioPos.x > 0) this.marioPos.x -= 20
+            if (evt.key === 'ArrowRight' && this.marioPos.x < 850) this.marioPos.x += 20
+            if (evt.key === 'ArrowUp' && this.marioPos.y > 0) { this.moveUp() }
+            if (evt.key === 'ArrowDown' && this.marioPos.y < 570) { this.moveDown() }
+        }
 
         // document.onkeydown = evt => {
         //     if (evt.key === 'ArrowRigth') this.marioRight = true
@@ -59,12 +74,5 @@ class Mario {
         //     console.log(this.setEventListeners)
         // }
 
-        document.onkeydown = evt => {
-            if (evt.key === 'ArrowLeft' && this.marioPos.x > 0) this.marioPos.x -= 10
-            if (evt.key === 'ArrowRight' && this.marioPos.x < 850) this.marioPos.x += 10
-            if (evt.key === 'ArrowUp' && this.marioPos.y > 0) this.marioPos.y -= 10
-            if (evt.key === 'ArrowDown' && this.marioPos.y < 570) this.marioPos.y += 10
-        }
     }
-    
 }
