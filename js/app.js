@@ -8,10 +8,12 @@ const appBarrels = {
     ctx: undefined,
     canvasSize: { w: 900, h: 700 },
     mario: undefined,
+    don: undefined,
     framesCounter: 0,
     platforms: [],
     stairs: [],
     barrels: [],
+    win: undefined,
     timer: 1,
     interval: undefined,
 
@@ -35,28 +37,33 @@ const appBarrels = {
 
     reset() {
         this.platforms.push(
-            new Platform(this.ctx, this.canvasSize, 500, 10, 200, 40),
+            new Platform(this.ctx, this.canvasSize, 500, 10, 200, 60),
             new Platform(this.ctx, this.canvasSize, 550, 20, 320, 150),
             new Platform(this.ctx, this.canvasSize, 300, 20, 80, 250),
             new Platform(this.ctx, this.canvasSize, 500, 20, 150, 400),
-            new Platform(this.ctx, this.canvasSize, 400, 20, 500, 500),
+            new Platform(this.ctx, this.canvasSize, 400, 20, 500, 515),
             new Platform(this.ctx, this.canvasSize, 1000, 50, 0, 650),
         ),
+
             this.stairs.push(
-                new Stairs(this.ctx, this.canvasSize, 40, 180, 750, 520),
+                new Stairs(this.ctx, this.canvasSize, 20, 135, 750, 515),
                 new Stairs(this.ctx, this.canvasSize, 20, 80, 530, 420),
                 new Stairs(this.ctx, this.canvasSize, 20, 130, 230, 270),
                 new Stairs(this.ctx, this.canvasSize, 20, 80, 350, 170),
-                new Stairs(this.ctx, this.canvasSize, 20, 100, 550, 50),
+                new Stairs(this.ctx, this.canvasSize, 20, 89, 550, 60),
             ),
-            this.mario = new Mario(this.ctx, this.canvasSize, 15, 80, 10, 620, this.marioRight, this.marioLeft, this.marioUp, this.marioDown)
+
+            this.mario = new Mario(this.ctx, this.canvasSize, 15, 80, 10, 575, this.marioRight, this.marioLeft, this.marioUp, this.marioDown)
         console.log('plataforma')
+
+        this.don = new Don(this.ctx, this.canvasSize, 15, 20, 250, 20)
 
         this.barrels.push(new Barrel(this.ctx, this.canvasSize))
         this.barrels = []
 
-        console.log(Barrel)
+        this.win = new Win(this.ctx, this.canvasSize, 15, 20, 280, 20)
     },
+
     start() {
         this.reset()
         this.interval = setInterval(() => {
@@ -65,12 +72,10 @@ const appBarrels = {
             this.drawAll()
             this.generateBarrel()
             this.clearBarrel()
-            this.isColission()
-            this.isColissionWithStairs()
-            this.isColissionWithPlatforms()
-            // this.barrels.forEach(elm => console.log('soy la posicion del barrel', elm.barrelPos.y))
-            // console.log('soy la posición del madrio', this.mario.marioPos.x)
-            //if (this.isColission) this.gameOver()
+            this.isColissionWithBarrel()
+            this.isColissionWithStructure()
+            this.isCollissionWithWin()
+            this.isCollissionWithDon()
 
         }, 100)
     },
@@ -81,6 +86,9 @@ const appBarrels = {
         this.stairs.forEach(Stairs => Stairs.draw())
         this.mario.draw()
         this.mario.move()
+        this.don.draw()
+        this.don.move()
+        this.win.draw()
         this.barrels.forEach(Barrel => Barrel.draw())
         this.barrels.forEach(Barrel => Barrel.move())
     },
@@ -105,7 +113,7 @@ const appBarrels = {
         this.barrels = this.barrels.filter(Barrel => Barrel.barrelPos.x > 0)
     },
 
-    isColission() {
+    isColissionWithBarrel() {
 
         this.barrels.forEach(barrel => {
             if (
@@ -116,12 +124,13 @@ const appBarrels = {
             ) {
                 this.gameOver()
             }
-        })
 
+        })
     },
 
-    isColissionWithStairs() {
-        const hasCollisioned = this.stairs.some(stair => {
+    isColissionWithStructure() {
+
+        const hasCollisionedStairs = this.stairs.some(stair => {
             return (
                 this.mario.marioPos.x <= stair.stairsPos.x + stair.stairsSize.w &&
                 this.mario.marioPos.x + this.mario.marioSize.w >= stair.stairsPos.x &&
@@ -129,10 +138,7 @@ const appBarrels = {
                 this.mario.marioSize.h + this.mario.marioPos.y > stair.stairsPos.y
             )
         })
-        hasCollisioned ? this.mario.canMoveUpDown = true : this.mario.canMoveUpDown = false
-    },
 
-    isColissionWithPlatforms(){
         const collisionedPlatform = this.platforms.some(platform => {
             return (
                 this.mario.marioPos.x <= platform.platformPos.x + platform.platformSize.w &&
@@ -141,12 +147,52 @@ const appBarrels = {
                 this.mario.marioSize.h + this.mario.marioPos.y > platform.platformPos.y
             )
         })
-        collisionedPlatform = this.mario.marioPos.y = this.platform.platformPos.y - this.mario.marioSize.h + 1
+
+        if (hasCollisionedStairs && collisionedPlatform) {
+            this.mario.gravityActive = false
+            this.mario.canMoveUpDown = true
+        } else if (collisionedPlatform) {
+            this.mario.gravityActive = false
+            this.mario.canMoveUpDown = false
+        } else if (hasCollisionedStairs) {
+            this.mario.gravityActive = false
+            this.mario.canMoveUpDown = true
+        } else {
+            this.mario.gravityActive = true
+            this.mario.canMoveUpDown = false
+        }
+    },
+    isCollissionWithWin() {
+        if (
+            this.mario.marioPos.x < this.win.winPos.x + this.win.winSize.w &&
+            this.mario.marioPos.x + this.mario.marioSize.w > this.win.winPos.x &&
+            this.mario.marioPos.y < this.win.winPos.y + this.win.winSize.h &&
+            this.mario.marioSize.h + this.mario.marioPos.y > this.win.winPos.y
+        ) {
+            this.winGame()
+        }
+    },
+
+    isCollissionWithDon() {
+        if (
+            this.mario.marioPos.x <= this.don.donPos.x + this.don.donSize.w &&
+            this.mario.marioPos.x + this.mario.marioSize.w >= this.don.donPos.x &&
+            this.mario.marioPos.y < this.don.donPos.y + this.don.donSize.h &&
+            this.mario.marioSize.h + this.mario.marioPos.y > this.don.donPos.y
+        )
+            this.gameOver()
     },
 
     gameOver() {
         console.log('entro aquii?')
         clearInterval(this.interval)
 
+    },
+
+
+    winGame() {
+
+        clearInterval(this.interval)
+        // {return alert('YOU WIN')}
     },
 }

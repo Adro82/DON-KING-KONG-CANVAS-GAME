@@ -11,7 +11,8 @@ class Mario {
             y: marioY
         }
         this.marioVel = { x: 0, y: 0 }
-        this.gravity = 0.1;
+        this.gravityActive = true
+        this.gravity = 0.4;
         this.canMoveUpDown = false
         this.init()
         this.setEventListeners()
@@ -30,24 +31,16 @@ class Mario {
     }
 
     move() {
-        this.marioPos.x += this.marioVel.x
-        this.marioPos.y += this.marioVel.y
-
-        this.marioVel.y += this.gravity
-
-        if (this.marioPos.y > this.canvasSize.h - this.marioSize.h) {
-            this.marioVel.y = 0
-        }
-
-        if (this.marioPos.x >= this.canvasSize.w - this.marioSize.w) {
-            this.marioVel.x = 0
+        if (this.gravityActive) {
+            this.marioVel.y += this.gravity
+            this.marioPos.y += this.marioVel.y
         }
     }
     moveUp() {
-        if (this.canMoveUpDown) { this.marioPos.y -= 10; this.gravity = 0 }
+        if (this.canMoveUpDown) { this.marioPos.y -= 10}
     }
     moveDown() {
-        if (this.canMoveUpDown) { this.marioPos.y += 10; this.gravity = 0 }
+        if (this.canMoveUpDown) { this.marioPos.y += 10}
     }
 
     setEventListeners() {
@@ -58,21 +51,6 @@ class Mario {
             if (evt.key === 'ArrowUp' && this.marioPos.y > 0) { this.moveUp() }
             if (evt.key === 'ArrowDown' && this.marioPos.y < 570) { this.moveDown() }
         }
-
-        // document.onkeydown = evt => {
-        //     if (evt.key === 'ArrowRigth') this.marioRight = true
-        //     if (evt.key === 'ArrowLeft') this.marioLeft = true
-        //     if (evt.key === 'ArrowUp') this.marioUp = true
-        //     if (evt.key === 'ArrowDown') this.marioDown = true
-        // }
-
-        // document.onkeyup = evt => {
-        //     if (evt.key === 'ArrowRigth') this.marioRight = false
-        //     if (evt.key === 'ArrowLeft') this.marioLeft = false
-        //     if (evt.key === 'ArrowUp') this.marioUp = false
-        //     if (evt.key === 'ArrowDown') this.marioDown = false
-        //     console.log(this.setEventListeners)
-        // }
 
     }
 }
