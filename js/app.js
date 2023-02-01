@@ -13,6 +13,7 @@ const appBarrels = {
     platforms: [],
     stairs: [],
     barrels: [],
+    livesCounter: [],
     win: undefined,
     timer: 1,
     interval: undefined,
@@ -30,7 +31,6 @@ const appBarrels = {
     setContext() {
         this.canvasTag = document.querySelector('canvas')
         this.ctx = this.canvasTag.getContext('2d')
-        console.log(this.ctx)
     },
 
     setDimensions() {
@@ -60,8 +60,13 @@ const appBarrels = {
                 new Stairs(this.ctx, this.canvasSize, 20, 100, 750, 550),
             ),
 
-            this.mario = new Mario(this.ctx, this.canvasSize, 15, 40, 10, 575, this.lives)
-        console.log('plataforma')
+            this.livesCounter.push(
+                new LiveCounter(this.ctx, this.canvasSize, 10, 10, 2, 5),
+                new LiveCounter(this.ctx, this.canvasSize, 10, 10, 18, 5),
+                new LiveCounter(this.ctx, this.canvasSize, 10, 10, 30, 5),
+            )
+
+        this.mario = new Mario(this.ctx, this.canvasSize, 15, 40, 10, 575, this.lives)
 
         this.don = new Don(this.ctx, this.canvasSize, 30, 50, 500, 40)
 
@@ -80,10 +85,10 @@ const appBarrels = {
             this.generateBarrel()
             this.clearBarrel()
             this.isColissionWithBarrel()
-            console.log('lo pilla?????', this.isColissionWithBarrel)
             this.isColissionWithStructure()
             this.isCollissionWithWin()
             this.isCollissionWithDon()
+            if (this.movementAllowed) true
 
         }, 100)
     },
@@ -99,13 +104,13 @@ const appBarrels = {
         this.win.draw()
         this.barrels.forEach(Barrel => Barrel.draw())
         this.barrels.forEach(Barrel => Barrel.move())
+        this.livesCounter.forEach(LiveCounter => LiveCounter.draw())
     },
 
     drawBackground() {
         this.ctx.fillStyle = 'darkgrey'
         this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
     },
-
 
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
@@ -123,18 +128,19 @@ const appBarrels = {
 
     isColissionWithBarrel() {
 
-        this.barrels.forEach(barrel => {
+        this.barrels.forEach((barrel, index) => {
             if (
                 this.mario.marioPos.x < barrel.barrelPos.x + barrel.barrelSize.w &&
                 this.mario.marioPos.x + this.mario.marioSize.w > barrel.barrelPos.x &&
                 this.mario.marioPos.y + this.mario.marioSize.h < barrel.barrelPos.y + barrel.barrelSize.h &&
                 this.mario.marioSize.h + this.mario.marioPos.y > barrel.barrelPos.y
             ) {
-                console.log('QUITO VIDA??????', this.mario.lives)
-                if (this.mario.lives === 3) { return this.mario.lives -= 1 }
-                if (this.mario.lives === 2) { return this.mario.lives -= 1 }
-                // if (this.mario.lives === 1) { return this.mario.lives -= 1 }
-                else { return this.gameOver() }
+                // borrrrrrrrrra
+                this.barrels.splice(index, 1)
+                this.mario.lives--
+                console.log("BORRA ESTA COSITA =====>", this.livesCounter.pop())
+                if (this.mario.lives === 0) this.gameOver()
+
 
             }
         })
@@ -196,7 +202,7 @@ const appBarrels = {
     },
 
     gameOver() {
-        console.log('entro aquii?')
+
         // this.ctx.font = "100px Courier New";
         // this.ctx.textAlign = 'center';
         // this.ctx.fillStyle = 'red';

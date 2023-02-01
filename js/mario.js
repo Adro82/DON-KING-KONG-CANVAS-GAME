@@ -14,9 +14,10 @@ class Mario {
         this.marioVel = { x: 0, y: 0 }
         this.gravityActive = true
         this.gravity = 0.4;
-        this.canMoveUpDown = false
+        this.canMoveUpDown = true
         this.init()
         this.setEventListeners()
+        this.movementAllowed = false
 
     }
 
@@ -38,15 +39,15 @@ class Mario {
         }
     }
     moveUp() {
-        if (this.canMoveUpDown) { this.marioPos.y -= 10}
+        if (this.canMoveUpDown) { this.marioPos.y -= 10 }
     }
     moveDown() {
-        if (this.canMoveUpDown) { this.marioPos.y += 10}
+        if (this.canMoveUpDown) { this.marioPos.y += 10 }
     }
 
     setEventListeners() {
 
-        document.onkeydown = evt => {
+       if (this.movementAllowed) {document.onkeydown = evt => {
             if (evt.key === 'ArrowLeft' && this.marioPos.x > 0) this.marioPos.x -= 20
             if (evt.key === 'ArrowRight' && this.marioPos.x < 850) this.marioPos.x += 20
             if (evt.key === 'ArrowUp' && this.marioPos.y > 0) { this.moveUp() }
@@ -54,4 +55,5 @@ class Mario {
         }
 
     }
+}
 }
