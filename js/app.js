@@ -60,7 +60,7 @@ const appBarrels = {
                 new Stairs(this.ctx, this.canvasSize, 20, 100, 750, 550),
             ),
 
-            this.mario = new Mario(this.ctx, this.canvasSize, 15, 40, 10, 575, this.marioRight, this.marioLeft, this.marioUp, this.marioDown)
+            this.mario = new Mario(this.ctx, this.canvasSize, 15, 40, 10, 575, this.lives)
         console.log('plataforma')
 
         this.don = new Don(this.ctx, this.canvasSize, 30, 50, 500, 40)
@@ -80,6 +80,7 @@ const appBarrels = {
             this.generateBarrel()
             this.clearBarrel()
             this.isColissionWithBarrel()
+            console.log('lo pilla?????', this.isColissionWithBarrel)
             this.isColissionWithStructure()
             this.isCollissionWithWin()
             this.isCollissionWithDon()
@@ -126,12 +127,16 @@ const appBarrels = {
             if (
                 this.mario.marioPos.x < barrel.barrelPos.x + barrel.barrelSize.w &&
                 this.mario.marioPos.x + this.mario.marioSize.w > barrel.barrelPos.x &&
-                this.mario.marioPos.y < barrel.barrelPos.y + barrel.barrelSize.h &&
+                this.mario.marioPos.y + this.mario.marioSize.h < barrel.barrelPos.y + barrel.barrelSize.h &&
                 this.mario.marioSize.h + this.mario.marioPos.y > barrel.barrelPos.y
             ) {
-                this.gameOver()
-            }
+                console.log('QUITO VIDA??????', this.mario.lives)
+                if (this.mario.lives === 3) { return this.mario.lives -= 1 }
+                if (this.mario.lives === 2) { return this.mario.lives -= 1 }
+                // if (this.mario.lives === 1) { return this.mario.lives -= 1 }
+                else { return this.gameOver() }
 
+            }
         })
     },
 
@@ -192,12 +197,12 @@ const appBarrels = {
 
     gameOver() {
         console.log('entro aquii?')
-        this.ctx.font = "100px Courier New";
-        this.ctx.textAlign = 'center';
-        this.ctx.fillStyle = 'red';
-        this.ctx.fillText = 'GAME OVER';
-
+        // this.ctx.font = "100px Courier New";
+        // this.ctx.textAlign = 'center';
+        // this.ctx.fillStyle = 'red';
+        // this.ctx.fillText = 'GAME OVER';
         clearInterval(this.interval)
+        // {return alert('YOU LOSE')}
 
     },
 

@@ -1,5 +1,5 @@
 class Mario {
-    constructor(ctx, canvasSize, marioWidth, marioHeight, marioX, marioY, marioRight, marioLeft, marioUp, marioDown) {
+    constructor(ctx, canvasSize, marioWidth, marioHeight, marioX, marioY, lives = 3) {
         this.ctx = ctx
         this.canvasSize = canvasSize
         this.marioSize = {
@@ -10,6 +10,7 @@ class Mario {
             x: marioX,
             y: marioY
         }
+        this.lives = lives
         this.marioVel = { x: 0, y: 0 }
         this.gravityActive = true
         this.gravity = 0.4;
