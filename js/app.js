@@ -16,6 +16,10 @@ const appBarrels = {
     win: undefined,
     timer: 1,
     interval: undefined,
+    font: undefined,
+    textAlign: undefined,
+    fillStyle: undefined,
+    fillText: undefined,
 
     init() {
         this.setContext()
@@ -37,31 +41,34 @@ const appBarrels = {
 
     reset() {
         this.platforms.push(
-            new Platform(this.ctx, this.canvasSize, 500, 10, 200, 60),
-            new Platform(this.ctx, this.canvasSize, 550, 20, 320, 150),
-            new Platform(this.ctx, this.canvasSize, 300, 20, 80, 250),
-            new Platform(this.ctx, this.canvasSize, 500, 20, 150, 400),
-            new Platform(this.ctx, this.canvasSize, 400, 20, 500, 515),
+            new Platform(this.ctx, this.canvasSize, 1000, 10, 1, 90),
+            new Platform(this.ctx, this.canvasSize, 500, 10, 330, 170),
+            new Platform(this.ctx, this.canvasSize, 350, 10, 270, 260),
+            new Platform(this.ctx, this.canvasSize, 420, 10, 220, 350),
+            new Platform(this.ctx, this.canvasSize, 400, 10, 500, 450),
+            new Platform(this.ctx, this.canvasSize, 1000, 10, 1, 550),
             new Platform(this.ctx, this.canvasSize, 1000, 50, 0, 650),
         ),
 
             this.stairs.push(
-                new Stairs(this.ctx, this.canvasSize, 20, 135, 750, 515),
-                new Stairs(this.ctx, this.canvasSize, 20, 80, 530, 420),
-                new Stairs(this.ctx, this.canvasSize, 20, 130, 230, 270),
-                new Stairs(this.ctx, this.canvasSize, 20, 80, 350, 170),
-                new Stairs(this.ctx, this.canvasSize, 20, 89, 550, 60),
+                new Stairs(this.ctx, this.canvasSize, 20, 380, 100, 170),
+                new Stairs(this.ctx, this.canvasSize, 20, 80, 700, 90),
+                new Stairs(this.ctx, this.canvasSize, 20, 89, 480, 170),
+                //new Stairs(this.ctx, this.canvasSize, 20, 90, 300, 260),
+                new Stairs(this.ctx, this.canvasSize, 20, 100, 610, 350),
+                new Stairs(this.ctx, this.canvasSize, 20, 100, 530, 450),
+                new Stairs(this.ctx, this.canvasSize, 20, 100, 750, 550),
             ),
 
-            this.mario = new Mario(this.ctx, this.canvasSize, 15, 80, 10, 575, this.marioRight, this.marioLeft, this.marioUp, this.marioDown)
+            this.mario = new Mario(this.ctx, this.canvasSize, 15, 40, 10, 575, this.marioRight, this.marioLeft, this.marioUp, this.marioDown)
         console.log('plataforma')
 
-        this.don = new Don(this.ctx, this.canvasSize, 15, 20, 250, 20)
+        this.don = new Don(this.ctx, this.canvasSize, 30, 50, 500, 40)
 
         this.barrels.push(new Barrel(this.ctx, this.canvasSize))
         this.barrels = []
 
-        this.win = new Win(this.ctx, this.canvasSize, 15, 20, 280, 20)
+        this.win = new Win(this.ctx, this.canvasSize, 40, 60, 450, 35)
     },
 
     start() {
@@ -104,7 +111,7 @@ const appBarrels = {
     },
 
     generateBarrel() {
-        if (this.framesCounter % 70 === 0) {
+        if (this.framesCounter % 10 === 0) {
             this.barrels.push(new Barrel(this.ctx, this.canvasSize))
         }
     },
@@ -132,8 +139,8 @@ const appBarrels = {
 
         const hasCollisionedStairs = this.stairs.some(stair => {
             return (
-                this.mario.marioPos.x <= stair.stairsPos.x + stair.stairsSize.w &&
-                this.mario.marioPos.x + this.mario.marioSize.w >= stair.stairsPos.x &&
+                this.mario.marioPos.x < stair.stairsPos.x + stair.stairsSize.w &&
+                this.mario.marioPos.x + this.mario.marioSize.w > stair.stairsPos.x &&
                 this.mario.marioPos.y < stair.stairsPos.y + stair.stairsSize.h &&
                 this.mario.marioSize.h + this.mario.marioPos.y > stair.stairsPos.y
             )
@@ -141,9 +148,9 @@ const appBarrels = {
 
         const collisionedPlatform = this.platforms.some(platform => {
             return (
-                this.mario.marioPos.x <= platform.platformPos.x + platform.platformSize.w &&
-                this.mario.marioPos.x + this.mario.marioSize.w >= platform.platformPos.x &&
-                this.mario.marioPos.y < platform.platformPos.y + platform.platformSize.h &&
+                this.mario.marioPos.x < platform.platformPos.x + platform.platformSize.w &&
+                this.mario.marioPos.x + this.mario.marioSize.w > platform.platformPos.x &&
+                this.mario.marioPos.y + this.mario.marioSize.h / 1.25 < platform.platformPos.y + platform.platformSize.h &&
                 this.mario.marioSize.h + this.mario.marioPos.y > platform.platformPos.y
             )
         })
@@ -185,6 +192,11 @@ const appBarrels = {
 
     gameOver() {
         console.log('entro aquii?')
+        this.ctx.font = "100px Courier New";
+        this.ctx.textAlign = 'center';
+        this.ctx.fillStyle = 'red';
+        this.ctx.fillText = 'GAME OVER';
+
         clearInterval(this.interval)
 
     },
@@ -193,6 +205,6 @@ const appBarrels = {
     winGame() {
 
         clearInterval(this.interval)
-        // {return alert('YOU WIN')}
+        { return alert('YOU WIN') }
     },
 }

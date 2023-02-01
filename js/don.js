@@ -11,7 +11,7 @@ class Don {
             y: donY
         }
         this.donVel = {
-            x: 5, y: 0
+            x: 10, y: 0
         }
         this.init()
     }
@@ -25,10 +25,10 @@ class Don {
         this.move()
     }
     move() {
-        if (this.donPos.x > 500) {
+        if (this.donPos.x > 800) {
             this.donVel.x *= -1
         }
-        if (this.donPos.x < 100) {
+        if (this.donPos.x < 10) {
             this.donVel.x *= -1
         }
         this.donPos.x += this.donVel.x

@@ -22,6 +22,6 @@ class Barrel {
     }
 
     move() {
-        this.barrelPos.y += 5
+        this.barrelPos.y += 20
     }
 }
