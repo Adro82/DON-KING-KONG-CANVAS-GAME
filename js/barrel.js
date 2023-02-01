@@ -16,9 +16,12 @@ class Barrel {
     }
 
     draw() {
-        this.move()
-        this.ctx.fillStyle = 'lightyellow'
-        this.ctx.fillRect(this.barrelPos.x, this.barrelPos.y, this.barrelSize.w, this.barrelSize.h)
+        this.imageInstance = new Image()
+        this.imageInstance.src = './images/barrel.png'
+        this.ctx.drawImage(this.imageInstance, this.barrelPos.x, this.barrelPos.y, this.barrelSize.w, this.barrelSize.h)
+        // this.move()
+        // this.ctx.fillStyle = 'lightyellow'
+        // this.ctx.fillRect(this.barrelPos.x, this.barrelPos.y, this.barrelSize.w, this.barrelSize.h)
     }
 
     move() {

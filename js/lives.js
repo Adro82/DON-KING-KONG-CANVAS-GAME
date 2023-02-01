@@ -15,8 +15,12 @@ class LiveCounter{
     }
 
     draw() {
-        this.ctx.fillStyle = 'red'
-        this.ctx.fillRect(this.livePos.x, this.livePos.y, this.liveSize.w, this.liveSize.h)
+
+        this.imageInstance = new Image()
+        this.imageInstance.src = './images/heart.png'
+        this.ctx.drawImage(this.imageInstance, this.livePos.x, this.livePos.y, this.liveSize.w, this.liveSize.h)
+        // this.ctx.fillStyle = 'red'
+        // this.ctx.fillRect(this.livePos.x, this.livePos.y, this.liveSize.w, this.liveSize.h)
     }
 
 

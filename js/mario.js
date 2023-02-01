@@ -17,7 +17,8 @@ class Mario {
         this.canMoveUpDown = true
         this.init()
         this.setEventListeners()
-        this.movementAllowed = false
+        this.canMoveRight = false
+        this.canMoveLeft = false
 
     }
 
@@ -44,16 +45,26 @@ class Mario {
     moveDown() {
         if (this.canMoveUpDown) { this.marioPos.y += 10 }
     }
+    moveRight (){
+        if(this.canMoveRight) {this.marioPos.x += 15}
+    }
+    moveLeft (){
+        if (this.canMoveLeft) {this.marioPos.x -= 15}
+    }
 
     setEventListeners() {
 
-       if (this.movementAllowed) {document.onkeydown = evt => {
-            if (evt.key === 'ArrowLeft' && this.marioPos.x > 0) this.marioPos.x -= 20
-            if (evt.key === 'ArrowRight' && this.marioPos.x < 850) this.marioPos.x += 20
+       document.onkeydown = evt => {
+            if (evt.key === 'ArrowLeft' && this.marioPos.x > 0) this.canMoveLeft = true
+            if (evt.key === 'ArrowRight' && this.marioPos.x < 850) this.canMoveRight = true
             if (evt.key === 'ArrowUp' && this.marioPos.y > 0) { this.moveUp() }
             if (evt.key === 'ArrowDown' && this.marioPos.y < 570) { this.moveDown() }
         }
 
+        document.onkeyup = evt => {
+            if (evt.key === 'ArrowLeft') this.canMoveLeft = false
+            if (evt.key === 'ArrowRight') this.canMoveRight = false
+        }
+
     }
-}
 }

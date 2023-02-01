@@ -17,10 +17,7 @@ const appBarrels = {
     win: undefined,
     timer: 1,
     interval: undefined,
-    font: undefined,
-    textAlign: undefined,
-    fillStyle: undefined,
-    fillText: undefined,
+    textPx: undefined,
 
     init() {
         this.setContext()
@@ -47,26 +44,26 @@ const appBarrels = {
             new Platform(this.ctx, this.canvasSize, 420, 10, 220, 350),
             new Platform(this.ctx, this.canvasSize, 400, 10, 500, 450),
             new Platform(this.ctx, this.canvasSize, 1000, 10, 1, 550),
-            new Platform(this.ctx, this.canvasSize, 1000, 50, 0, 650),
+            new Platform(this.ctx, this.canvasSize, 1000, 30, 0, 670),
         ),
 
             this.stairs.push(
                 new Stairs(this.ctx, this.canvasSize, 20, 380, 100, 170),
                 new Stairs(this.ctx, this.canvasSize, 20, 80, 700, 90),
                 new Stairs(this.ctx, this.canvasSize, 20, 89, 480, 170),
-                //new Stairs(this.ctx, this.canvasSize, 20, 90, 300, 260),
+                new Stairs(this.ctx, this.canvasSize, 20, 90, 300, 260),
                 new Stairs(this.ctx, this.canvasSize, 20, 100, 610, 350),
                 new Stairs(this.ctx, this.canvasSize, 20, 100, 530, 450),
-                new Stairs(this.ctx, this.canvasSize, 20, 100, 750, 550),
+                new Stairs(this.ctx, this.canvasSize, 20, 120, 770, 550),
             ),
 
             this.livesCounter.push(
-                new LiveCounter(this.ctx, this.canvasSize, 10, 10, 2, 5),
-                new LiveCounter(this.ctx, this.canvasSize, 10, 10, 18, 5),
-                new LiveCounter(this.ctx, this.canvasSize, 10, 10, 30, 5),
+                new LiveCounter(this.ctx, this.canvasSize, 20, 20, 2, 5),
+                new LiveCounter(this.ctx, this.canvasSize, 20, 20, 24, 5),
+                new LiveCounter(this.ctx, this.canvasSize, 20, 20, 46, 5),
             )
 
-        this.mario = new Mario(this.ctx, this.canvasSize, 15, 40, 10, 575, this.lives)
+        this.mario = new Mario(this.ctx, this.canvasSize, 15, 40, 10, 630, this.lives)
 
         this.don = new Don(this.ctx, this.canvasSize, 30, 50, 500, 40)
 
@@ -88,13 +85,15 @@ const appBarrels = {
             this.isColissionWithStructure()
             this.isCollissionWithWin()
             this.isCollissionWithDon()
-            if (this.movementAllowed) true
+            if (this.mario.canMoveLeft) this.mario.moveLeft()
+            if (this.mario.canMoveRight) this.mario.moveRight()
 
         }, 100)
     },
 
     drawAll() {
         this.drawBackground()
+        this.drawGameOver()
         this.platforms.forEach(Platform => Platform.draw())
         this.stairs.forEach(Stairs => Stairs.draw())
         this.mario.draw()
@@ -108,8 +107,16 @@ const appBarrels = {
     },
 
     drawBackground() {
-        this.ctx.fillStyle = 'darkgrey'
-        this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+        // this.ctx.fillStyle = 'darkgrey'
+        // this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
+        this.imageInstance = new Image()
+        this.imageInstance.src = './images/backgroundDonkey.png'
+        this.ctx.drawImage(this.imageInstance, 0, 0, this.canvasSize.w, this.canvasSize.h)
+    },
+
+    drawGameOver() {
+        this.imageInstance = new Image()
+        this.imageInstance.src = './images/gameover.png'
     },
 
     clearAll() {
@@ -138,7 +145,8 @@ const appBarrels = {
                 // borrrrrrrrrra
                 this.barrels.splice(index, 1)
                 this.mario.lives--
-                console.log("BORRA ESTA COSITA =====>", this.livesCounter.pop())
+                // console.log("BORRA ESTA COSITA =====>", this.livesCounter.pop())
+                this.livesCounter.pop()
                 if (this.mario.lives === 0) this.gameOver()
 
 
@@ -198,18 +206,16 @@ const appBarrels = {
             this.mario.marioPos.y < this.don.donPos.y + this.don.donSize.h &&
             this.mario.marioSize.h + this.mario.marioPos.y > this.don.donPos.y
         )
+            // this.livesCounter.splice(0, 3)
             this.gameOver()
     },
 
     gameOver() {
 
-        // this.ctx.font = "100px Courier New";
-        // this.ctx.textAlign = 'center';
-        // this.ctx.fillStyle = 'red';
-        // this.ctx.fillText = 'GAME OVER';
         clearInterval(this.interval)
-        // {return alert('YOU LOSE')}
-
+        this.clearAll()
+        this.ctx.drawImage(this.imageInstance, 0, 0, this.canvasSize.w, this.canvasSize.h)
+        setTimeout(() => location.reload(), 2000)
     },
 
 

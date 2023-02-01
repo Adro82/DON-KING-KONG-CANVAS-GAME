@@ -15,7 +15,11 @@ class Stairs {
     }
 
     draw() {
-        this.ctx.fillStyle = 'pink'
-        this.ctx.fillRect(this.stairsPos.x, this.stairsPos.y, this.stairsSize.w, this.stairsSize.h)
+        this.imageInstance = new Image()
+        this.imageInstance.src = './images/ladder.png'
+        this.ctx.drawImage(this.imageInstance, this.stairsPos.x, this.stairsPos.y, this.stairsSize.w, this.stairsSize.h)
+        
+        // this.ctx.fillStyle = 'pink'
+        // this.ctx.fillRect(this.stairsPos.x, this.stairsPos.y, this.stairsSize.w, this.stairsSize.h)
     }
 }
