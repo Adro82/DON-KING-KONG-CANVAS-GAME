@@ -42,4 +42,5 @@ body button {
 
 canvas {
     border: 2px greenyellow solid;
+    background-color: grey;
 }

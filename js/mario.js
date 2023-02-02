@@ -55,15 +55,15 @@ class Mario {
     setEventListeners() {
 
        document.onkeydown = evt => {
-            if (evt.key === 'ArrowLeft' && this.marioPos.x > 0) this.canMoveLeft = true
+            if (evt.key === 'ArrowLeft' && this.marioPos.x > 1) this.canMoveLeft = true
             if (evt.key === 'ArrowRight' && this.marioPos.x < 850) this.canMoveRight = true
-            if (evt.key === 'ArrowUp' && this.marioPos.y > 0) { this.moveUp() }
+            if (evt.key === 'ArrowUp' && this.marioPos.y > 1) { this.moveUp() }
             if (evt.key === 'ArrowDown' && this.marioPos.y < 570) { this.moveDown() }
         }
 
         document.onkeyup = evt => {
-            if (evt.key === 'ArrowLeft') this.canMoveLeft = false
-            if (evt.key === 'ArrowRight') this.canMoveRight = false
+            if (evt.key === 'ArrowLeft' && this.marioPos.x > 1) this.canMoveLeft = false
+            if (evt.key === 'ArrowRight' && this.marioPos.x < 850) this.canMoveRight = false
         }
 
     }

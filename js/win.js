@@ -20,7 +20,8 @@ class Win {
     }
     draw() {
         this.imageInstance = new Image()
-        this.imageInstance.src = './images/car.png'
+        this.imageInstance.src = './images/winGame.png'
         this.ctx.drawImage(this.imageInstance, this.winPos.x, this.winPos.y, this.winSize.w, this.winSize.h)
+
     }
 }

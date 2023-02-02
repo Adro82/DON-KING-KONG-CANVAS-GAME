@@ -70,7 +70,7 @@ const appBarrels = {
         this.barrels.push(new Barrel(this.ctx, this.canvasSize))
         this.barrels = []
 
-        this.win = new Win(this.ctx, this.canvasSize, 40, 60, 450, 35)
+        this.win = new Win(this.ctx, this.canvasSize, 40, 60, 340, 35)
     },
 
     start() {
@@ -94,6 +94,7 @@ const appBarrels = {
     drawAll() {
         this.drawBackground()
         this.drawGameOver()
+        this.drawWinGame()
         this.platforms.forEach(Platform => Platform.draw())
         this.stairs.forEach(Stairs => Stairs.draw())
         this.mario.draw()
@@ -117,6 +118,11 @@ const appBarrels = {
     drawGameOver() {
         this.imageInstance = new Image()
         this.imageInstance.src = './images/gameover.png'
+    },
+
+    drawWinGame() {
+        this.imageInstance = new Image()
+        this.imageInstance.src = './images/win.png'
     },
 
     clearAll() {
@@ -222,6 +228,9 @@ const appBarrels = {
     winGame() {
 
         clearInterval(this.interval)
-        { return alert('YOU WIN') }
+        // { return alert('YOU WIN') }
+        this.clearAll()
+        this.ctx.drawImage(this.imageInstance, 0, 0, this.canvasSize.w, this.canvasSize.h)
+        setTimeout(() => location.reload(), 5000)
     },
 }
