@@ -18,8 +18,6 @@ class Platform {
         this.imageInstance = new Image()
         this.imageInstance.src = './images/platform.png'
         this.ctx.drawImage(this.imageInstance, this.platformPos.x, this.platformPos.y, this.platformSize.w, this.platformSize.h)
-        // this.ctx.fillStyle = 'lightgrey'
-        // this.ctx.fillRect(this.platformPos.x, this.platformPos.y, this.platformSize.w, this.platformSize.h)
     }
 
 

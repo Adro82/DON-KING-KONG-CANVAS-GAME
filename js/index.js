@@ -1,7 +1,9 @@
 
 window.onload = () => {document.getElementById('start-button').onclick = () => {
+    const backgroundMusic = new Audio('./audio/musicSound.wav')
     appBarrels.init();
-    music.play();
+    backgroundMusic.play();
+    backgroundMusic.loop = true;
     startGame();
 };
     // function startGame() {

@@ -18,6 +18,7 @@ const appBarrels = {
     timer: 1,
     interval: undefined,
     textPx: undefined,
+    liveOut: new Audio('./audio/ohNo.wav'),
 
     init() {
         this.setContext()
@@ -70,7 +71,7 @@ const appBarrels = {
         this.barrels.push(new Barrel(this.ctx, this.canvasSize))
         this.barrels = []
 
-        this.win = new Win(this.ctx, this.canvasSize, 40, 60, 340, 35)
+        this.win = new Win(this.ctx, this.canvasSize, 40, 60, 320, 35)
     },
 
     start() {
@@ -87,8 +88,7 @@ const appBarrels = {
             this.isCollissionWithDon()
             if (this.mario.canMoveLeft) this.mario.moveLeft()
             if (this.mario.canMoveRight) this.mario.moveRight()
-
-        }, 1000 / 20)
+        }, 1000 / 30)
     },
 
     drawAll() {
@@ -128,7 +128,7 @@ const appBarrels = {
     },
 
     generateBarrel() {
-        if (this.framesCounter % 90 === 0) {
+        if (this.framesCounter % 10 === 0) {
             this.barrels.push(new Barrel(this.ctx, this.canvasSize))
         }
     },
@@ -145,12 +145,11 @@ const appBarrels = {
                 this.mario.marioPos.y + this.mario.marioSize.h < barrel.barrelPos.y + barrel.barrelSize.h &&
                 this.mario.marioSize.h + this.mario.marioPos.y > barrel.barrelPos.y
             ) {
+                this.liveOut.play()
                 this.barrels.splice(index, 1)
                 this.mario.lives--
                 this.livesCounter.pop()
                 if (this.mario.lives === 0) this.gameOver()
-
-
             }
         })
     },
@@ -165,7 +164,7 @@ const appBarrels = {
                 this.mario.marioSize.h + this.mario.marioPos.y > stair.stairsPos.y
             )
         })
-
+        console.log("hello", hasCollisionedStairs)
         const collisionedPlatform = this.platforms.some(platform => {
             return (
                 this.mario.marioPos.x < platform.platformPos.x + platform.platformSize.w &&
@@ -189,6 +188,7 @@ const appBarrels = {
             this.mario.canMoveUpDown = false
         }
     },
+
     isCollissionWithWin() {
         if (
             this.mario.marioPos.x < this.win.winPos.x + this.win.winSize.w &&
@@ -207,7 +207,6 @@ const appBarrels = {
             this.mario.marioPos.y < this.don.donPos.y + this.don.donSize.h &&
             this.mario.marioSize.h + this.mario.marioPos.y > this.don.donPos.y
         )
-
             this.gameOver()
     },
 
@@ -226,5 +225,4 @@ const appBarrels = {
         this.ctx.drawImage(this.gameIsWin, 0, 0, this.canvasSize.w, this.canvasSize.h)
         setTimeout(() => location.reload(), 5000)
     },
-
 }
