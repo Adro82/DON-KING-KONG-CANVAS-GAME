@@ -1,7 +1,7 @@
 body {
     padding: 0;
     text-align: center;
-    /* background-color: black; */
+    background-color: black;
 }
 
 .game-intro {
@@ -35,6 +35,7 @@ body button {
     margin-bottom: 20px;
 }
 
+
 #game-board {
     float: left;
     padding: 20px 0px;
@@ -42,5 +43,5 @@ body button {
 
 canvas {
     border: 2px greenyellow solid;
-    background-color: grey;
+    background-image: url(../images/backgroundDonkey.png);
 }

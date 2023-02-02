@@ -63,9 +63,9 @@ const appBarrels = {
                 new LiveCounter(this.ctx, this.canvasSize, 20, 20, 46, 5),
             )
 
-        this.mario = new Mario(this.ctx, this.canvasSize, 15, 40, 10, 630, this.lives)
+        this.mario = new Mario(this.ctx, this.canvasSize, 30, 50, 10, 630, this.lives)
 
-        this.don = new Don(this.ctx, this.canvasSize, 30, 50, 500, 40)
+        this.don = new Don(this.ctx, this.canvasSize, 50, 80, 500, 18)
 
         this.barrels.push(new Barrel(this.ctx, this.canvasSize))
         this.barrels = []
@@ -76,7 +76,7 @@ const appBarrels = {
     start() {
         this.reset()
         this.interval = setInterval(() => {
-            this.framesCounter > 300 ? this.framesCounter = 0 : this.framesCounter++
+            this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
             this.clearAll()
             this.drawAll()
             this.generateBarrel()
@@ -88,7 +88,7 @@ const appBarrels = {
             if (this.mario.canMoveLeft) this.mario.moveLeft()
             if (this.mario.canMoveRight) this.mario.moveRight()
 
-        }, 100)
+        }, 1000 / 20)
     },
 
     drawAll() {
@@ -97,32 +97,30 @@ const appBarrels = {
         this.drawWinGame()
         this.platforms.forEach(Platform => Platform.draw())
         this.stairs.forEach(Stairs => Stairs.draw())
-        this.mario.draw()
+        this.mario.draw(this.framesCounter)
         this.mario.move()
-        this.don.draw()
-        this.don.move()
         this.win.draw()
+        this.don.draw(this.framesCounter)
+        this.don.move()
         this.barrels.forEach(Barrel => Barrel.draw())
         this.barrels.forEach(Barrel => Barrel.move())
         this.livesCounter.forEach(LiveCounter => LiveCounter.draw())
     },
 
     drawBackground() {
-        // this.ctx.fillStyle = 'darkgrey'
-        // this.ctx.fillRect(0, 0, this.canvasSize.w, this.canvasSize.h)
         this.imageInstance = new Image()
         this.imageInstance.src = './images/backgroundDonkey.png'
         this.ctx.drawImage(this.imageInstance, 0, 0, this.canvasSize.w, this.canvasSize.h)
     },
 
     drawGameOver() {
-        this.imageInstance = new Image()
-        this.imageInstance.src = './images/gameover.png'
+        this.gameIsOver = new Image()
+        this.gameIsOver.src = './images/gameover.png'
     },
 
     drawWinGame() {
-        this.imageInstance = new Image()
-        this.imageInstance.src = './images/win.png'
+        this.gameIsWin = new Image()
+        this.gameIsWin.src = './images/win.png'
     },
 
     clearAll() {
@@ -130,7 +128,7 @@ const appBarrels = {
     },
 
     generateBarrel() {
-        if (this.framesCounter % 10 === 0) {
+        if (this.framesCounter % 90 === 0) {
             this.barrels.push(new Barrel(this.ctx, this.canvasSize))
         }
     },
@@ -140,7 +138,6 @@ const appBarrels = {
     },
 
     isColissionWithBarrel() {
-
         this.barrels.forEach((barrel, index) => {
             if (
                 this.mario.marioPos.x < barrel.barrelPos.x + barrel.barrelSize.w &&
@@ -148,10 +145,8 @@ const appBarrels = {
                 this.mario.marioPos.y + this.mario.marioSize.h < barrel.barrelPos.y + barrel.barrelSize.h &&
                 this.mario.marioSize.h + this.mario.marioPos.y > barrel.barrelPos.y
             ) {
-                // borrrrrrrrrra
                 this.barrels.splice(index, 1)
                 this.mario.lives--
-                // console.log("BORRA ESTA COSITA =====>", this.livesCounter.pop())
                 this.livesCounter.pop()
                 if (this.mario.lives === 0) this.gameOver()
 
@@ -212,7 +207,7 @@ const appBarrels = {
             this.mario.marioPos.y < this.don.donPos.y + this.don.donSize.h &&
             this.mario.marioSize.h + this.mario.marioPos.y > this.don.donPos.y
         )
-            // this.livesCounter.splice(0, 3)
+
             this.gameOver()
     },
 
@@ -220,17 +215,16 @@ const appBarrels = {
 
         clearInterval(this.interval)
         this.clearAll()
-        this.ctx.drawImage(this.imageInstance, 0, 0, this.canvasSize.w, this.canvasSize.h)
+        this.ctx.drawImage(this.gameIsOver, 0, 0, this.canvasSize.w, this.canvasSize.h)
         setTimeout(() => location.reload(), 2000)
     },
-
 
     winGame() {
 
         clearInterval(this.interval)
-        // { return alert('YOU WIN') }
         this.clearAll()
-        this.ctx.drawImage(this.imageInstance, 0, 0, this.canvasSize.w, this.canvasSize.h)
+        this.ctx.drawImage(this.gameIsWin, 0, 0, this.canvasSize.w, this.canvasSize.h)
         setTimeout(() => location.reload(), 5000)
     },
+
 }

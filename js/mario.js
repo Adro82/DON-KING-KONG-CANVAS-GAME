@@ -15,6 +15,11 @@ class Mario {
         this.gravityActive = true
         this.gravity = 0.4;
         this.canMoveUpDown = true
+        this.imageInstance = new Image()
+        this.imageInstance.src = './images/marioright.png'
+        this.imageInstance.frames = 3
+        this.imageInstance.framesIndex  = 0
+        
         this.init()
         this.setEventListeners()
         this.canMoveRight = false
@@ -27,10 +32,19 @@ class Mario {
         this.move()
     }
 
-    draw() {
-        this.imageInstance = new Image()
-        this.imageInstance.src = './images/car.png'
-        this.ctx.drawImage(this.imageInstance, this.marioPos.x, this.marioPos.y, this.marioSize.w, this.marioSize.h)
+    draw(framesCounter) {
+        this.ctx.drawImage(this.imageInstance, (this.imageInstance.width / this.imageInstance.frames)*this.imageInstance.framesIndex, 0, this.imageInstance.width/this.imageInstance.frames, this.imageInstance.height, this.marioPos.x, this.marioPos.y, this.marioSize.w, this.marioSize.h)
+        this.animate(framesCounter)
+    }
+
+    animate(framesCounter) {
+        if (framesCounter % 4 == 0) {
+            this.imageInstance.framesIndex++
+        }
+
+        if (this.imageInstance.framesIndex >= this.imageInstance.frames) {
+            this.imageInstance.framesIndex = 0
+        }
     }
 
     move() {
@@ -46,7 +60,7 @@ class Mario {
         if (this.canMoveUpDown) { this.marioPos.y += 10 }
     }
     moveRight (){
-        if(this.canMoveRight) {this.marioPos.x += 15}
+        if (this.canMoveRight) {this.marioPos.x += 15}
     }
     moveLeft (){
         if (this.canMoveLeft) {this.marioPos.x -= 15}
@@ -55,15 +69,15 @@ class Mario {
     setEventListeners() {
 
        document.onkeydown = evt => {
-            if (evt.key === 'ArrowLeft' && this.marioPos.x > 1) this.canMoveLeft = true
-            if (evt.key === 'ArrowRight' && this.marioPos.x < 850) this.canMoveRight = true
+           if (evt.key === 'ArrowLeft' && this.marioPos.x < this.canvasSize.w - this.marioSize.w) this.canMoveLeft = true
+           if (evt.key === 'ArrowRight' && this.marioPos.x < this.canvasSize.w - this.marioSize.w) this.canMoveRight = true
             if (evt.key === 'ArrowUp' && this.marioPos.y > 1) { this.moveUp() }
             if (evt.key === 'ArrowDown' && this.marioPos.y < 570) { this.moveDown() }
         }
 
         document.onkeyup = evt => {
-            if (evt.key === 'ArrowLeft' && this.marioPos.x > 1) this.canMoveLeft = false
-            if (evt.key === 'ArrowRight' && this.marioPos.x < 850) this.canMoveRight = false
+            if (evt.key === 'ArrowLeft' && this.marioPos.x < this.canvasSize.w - this.marioSize.w) this.canMoveLeft = false
+            if (evt.key === 'ArrowRight' && this.marioPos.x < this.canvasSize.w - this.marioSize.w) this.canMoveRight = false
         }
 
     }
