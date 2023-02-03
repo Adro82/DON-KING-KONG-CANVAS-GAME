@@ -63,7 +63,7 @@ class Mario {
         if (this.marioPos.x < this.canvasSize.w - this.marioSize.w) { this.marioPos.x += 10 }
     }
     moveLeft() {
-        if (this.marioPos.x > 0) { this.marioPos.x -= 10 }
+        if (this.marioPos.x > 10) { this.marioPos.x -= 10 }
     }
 
     setEventListeners() {

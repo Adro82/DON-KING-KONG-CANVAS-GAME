@@ -49,10 +49,10 @@ const appBarrels = {
         ),
 
             this.stairs.push(
-                new Stairs(this.ctx, this.canvasSize, 20, 380, 100, 170),
+                new Stairs(this.ctx, this.canvasSize, 20, 290, 80, 100),
                 new Stairs(this.ctx, this.canvasSize, 20, 80, 700, 90),
                 new Stairs(this.ctx, this.canvasSize, 20, 89, 480, 170),
-                new Stairs(this.ctx, this.canvasSize, 20, 90, 300, 260),
+                // new Stairs(this.ctx, this.canvasSize, 20, 90, 300, 260),
                 new Stairs(this.ctx, this.canvasSize, 20, 100, 610, 350),
                 new Stairs(this.ctx, this.canvasSize, 20, 100, 530, 450),
                 new Stairs(this.ctx, this.canvasSize, 20, 120, 770, 550),
