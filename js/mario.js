@@ -13,7 +13,7 @@ class Mario {
         this.lives = lives
         this.marioVel = { x: 0, y: 0 }
         this.gravityActive = true
-        this.gravity = 0.4;
+        this.gravity = 0.6;
         this.canMoveUpDown = true
         this.imageInstance = new Image()
         this.imageInstance.src = './images/marioright.png'

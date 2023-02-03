@@ -1,4 +1,4 @@
-const appBarrels = {
+const appBarrels2 = {
     name: 'barrels',
     description: 'Don King Kong 2D for Ironhack Project',
     version: '1.0.0',
@@ -39,23 +39,20 @@ const appBarrels = {
 
     reset() {
         this.platforms.push(
-            new Platform(this.ctx, this.canvasSize, 1000, 10, 1, 90),
-            new Platform(this.ctx, this.canvasSize, 500, 10, 330, 170),
-            new Platform(this.ctx, this.canvasSize, 350, 10, 260, 260),
-            new Platform(this.ctx, this.canvasSize, 420, 10, 220, 350),
-            new Platform(this.ctx, this.canvasSize, 400, 10, 500, 450),
-            new Platform(this.ctx, this.canvasSize, 1000, 10, 1, 550),
-            new Platform(this.ctx, this.canvasSize, 1000, 30, 0, 670),
+            new Platform(this.ctx, this.canvasSize, 1000, 20, 1, 90),
+            new Platform(this.ctx, this.canvasSize, 470, 20, 250, 250),
+            new Platform(this.ctx, this.canvasSize, 400, 20, 280, 350),
+            new Platform(this.ctx, this.canvasSize, 200, 20, 480, 450),
+            new Platform(this.ctx, this.canvasSize, 200, 20, 300, 550),
+            new Platform(this.ctx, this.canvasSize, 1000, 20, 0, 670),
         ),
 
             this.stairs.push(
-                new Stairs(this.ctx, this.canvasSize, 20, 280, 80, 100),
-                new Stairs(this.ctx, this.canvasSize, 20, 80, 700, 90),
-                new Stairs(this.ctx, this.canvasSize, 20, 89, 480, 170),
-                // new Stairs(this.ctx, this.canvasSize, 20, 90, 300, 260),
-                new Stairs(this.ctx, this.canvasSize, 20, 100, 610, 350),
-                new Stairs(this.ctx, this.canvasSize, 20, 100, 530, 450),
-                new Stairs(this.ctx, this.canvasSize, 20, 120, 770, 550),
+                new Stairs(this.ctx, this.canvasSize, 20, 300, 100, 100),
+                new Stairs(this.ctx, this.canvasSize, 20, 200, 850, 90),
+                new Stairs(this.ctx, this.canvasSize, 20, 100, 660, 350),
+                new Stairs(this.ctx, this.canvasSize, 20, 100, 480, 450),
+                new Stairs(this.ctx, this.canvasSize, 20, 110, 300, 550),
             ),
 
             this.livesCounter.push(
@@ -77,7 +74,7 @@ const appBarrels = {
     start() {
         this.reset()
         this.interval = setInterval(() => {
-            this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
+            this.framesCounter > 1000 ? this.framesCounter = 0 : this.framesCounter++
             this.clearAll()
             this.drawAll()
             this.generateBarrel()
@@ -128,7 +125,7 @@ const appBarrels = {
     },
 
     generateBarrel() {
-        if (this.framesCounter % 20 === 0) {
+        if (this.framesCounter % 10 === 0) {
             this.barrels.push(new Barrel(this.ctx, this.canvasSize))
         }
     },
@@ -164,6 +161,7 @@ const appBarrels = {
                 this.mario.marioSize.h + this.mario.marioPos.y > stair.stairsPos.y
             )
         })
+        console.log("hello", hasCollisionedStairs)
         const collisionedPlatform = this.platforms.some(platform => {
             return (
                 this.mario.marioPos.x < platform.platformPos.x + platform.platformSize.w &&
