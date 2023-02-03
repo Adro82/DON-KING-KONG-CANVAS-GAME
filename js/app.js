@@ -179,6 +179,7 @@ const appBarrels = {
             this.mario.canMoveUpDown = true
         } else if (collisionedPlatform) {
             this.mario.gravityActive = false
+            this.mario.marioVel.y = 0
             this.mario.canMoveUpDown = false
         } else if (hasCollisionedStairs) {
             this.mario.gravityActive = false
